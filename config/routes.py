@@ -14,7 +14,6 @@ from handlers.about_handler import AboutHandler
 # accessed routes and simpler regexes before other routes.
 routes = [
     (r"/", IndexHandler),
-    (r"/courses", CourseHandler),
     (r"/foobar", Foobar),
     # (r"/departments", DepartmentHandler),
     (r"/ajax/fcqcard/([\w-]+)", FcqCardHandler),

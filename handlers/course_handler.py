@@ -4,6 +4,9 @@ from handlers.base_handler import BaseHandler
 
 class CourseHandler(BaseHandler):
 
+    def color(self, course_data):
+        return 'orange'
+
     def keywords_string(self, course_data):
         course_subject = course_data['course_subject']
         course_number = course_data['course_number']
@@ -21,58 +24,80 @@ class CourseHandler(BaseHandler):
         a data analysis project for studying and visualizing the University of
         Colorado's Faculty Course Questionnaire data.""".format(course_subject, course_number, course_title, course_level, campus_location)
 
+    def overtime_linechart_data(self, raw_data):
+
+        def _overtime_builder(overtime_data, key):
+            def _transform_overtime_data(yearterm):
+                return round(overtime_data[str(yearterm)][key], 1)
+            return _transform_overtime_data
+
+        def _overtime_dataset_builder(key):
+            color = {
+                'course_howmuchlearned_average': (247, 92, 3),
+                'course_challenge_average': (217, 3, 104),
+                'courseoverall_average': (130, 2, 99),
+                'course_priorinterest_average': (4, 167, 119)
+            }[key]
+            label = {
+                'course_howmuchlearned_average': 'Amount Learned',
+                'course_challenge_average': 'Challenge',
+                'courseoverall_average': 'Overall',
+                'course_priorinterest_average': 'Prior Interest'
+            }[key]
+            return {
+                'label': label,
+                'fillColor': "rgba({0},{1},{2},0.2)".format(*color),
+                'strokeColor': "rgba({0},{1},{2},1)".format(*color),
+                'pointColor': "rgba({0},{1},{2},1)".format(*color),
+                'pointHighlightStroke': "rgba({0},{1},{2},1)".format(*color),
+                'pointStrokeColor': "#fff",
+                'pointHighlightFill': "#fff",
+                'data': list(map(_overtime_builder(overtime_data, key), yearterms))
+            }
+
+        keys = [
+            'course_howmuchlearned_average',
+            'course_challenge_average',
+            'courseoverall_average',
+            'course_priorinterest_average'
+        ]
+        yearterms = raw_data['fcqs_yearterms']
+        overtime_data = raw_data['fcqs_overtime']
+        labels = list(map(self.convert_date, yearterms))
+        datasets = list(map(_overtime_dataset_builder, keys))
+        return tornado.escape.json_encode({
+            'labels': labels,
+            'datasets': datasets,
+        })
+
     def get(self, id):
         course = self.application.settings['course'].get_item(id)
+        print(course)
         if course is None:
             self.redirect('/notFound')
             return
+
         course_info_object = {
-            "code": "ACCT 3220",
-            "title": "Corp Financial Rprtng 1",
-            "department": "Accounting",
-            "sections": 79,
-            "students": 2578,
-            "last_fcq": "Spring 2015",
-            "first_fcq": "Spring 2012",
-        }
-        instructor_stats_object = {
-            "effectiveness": 5,
-            "overall": 3,
-            "availability": 6,
-            "respect": 2,
+            "title": course.get('course_title'),
+            "id": course.get('id'),
+            "campus": self.convert_campus(course.get('campus')),
+            "department": course.get('department_id'),
+            "subject": course.get('course_subject'),
+            "sections": len(course.get('fcqs')),
+            "instructors": course.get('fcqs_stats').get('total_instructors'),
         }
 
-        department_info_object = {
-            "name": "Computer Science",
-            "num_ugrads": 556,
-            "num_grads": 43,
-            "num_courses": 5,
-            "average_workload": "4hrs",
-            # NOT TAs,
-            "num_instructors": 58,
-            "first_fcq": "Spring 2012",
+        course_stats_object = {
+            "challenge": round(course.get('fcqs_stats').get('course_challenge_average'), 1),
+            "learned": round(course.get('fcqs_stats').get('course_howmuchlearned_average'), 1),
+            "overall": round(course.get('fcqs_stats').get('courseoverall_average'), 1),
+            "workload": course.get('hours_per_week_in_class_string')
         }
-        class1 = {
-            "name": "Spring 2015 ACCT 5220-2 Playing with Dildos",
-            "info": "All you need to know!",
-            "sdfjksjkdf": 'akjhsdakljsdjklasd',
-        }
-        class2 = {
-            "name": "Fall 2014 PSYCH 1300-2 Amateur Freud",
-            "info": "Facts out the wazoo!",
-            "sdfjksjkdf": 'akjhsdakljsdjklasd',
-        }
-        class3 = {
-            "name": "Fall 2013 CSCI 5001-2 Making Moneyzz",
-            "info": "Daddy Warbucks!",
-            "sdfjksjkdf": 'akjhsdakljsdjklasd',
-        }
-        instructor_fcqs_array = [
-        class1,class2,class3
-        ]
+
+        fcqs = course.get('fcqs', [])
+
         self.render('layouts/course_view.html',
             raw_data=course,
             course_info=course_info_object,
-            instructor_stats=instructor_stats_object,
-            department_info=department_info_object,
-            instructor_fcqs=instructor_fcqs_array)
+            course_stats=course_stats_object,
+            course_fcqs=fcqs)

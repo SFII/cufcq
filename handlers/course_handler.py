@@ -30,8 +30,8 @@ class CourseHandler(BaseHandler):
         
         course_info_object = {
             "title": course.get('course_title'),
-            "code": course.get('id'),
-            "campus": course.get('campus'),
+            "id": course.get('id'),
+            "campus": self.convert_campus(course.get('campus')),
             "department": course.get('department_id'),
             "subject": course.get('course_subject'),
             "sections": len(course.get('fcqs')),
@@ -45,7 +45,11 @@ class CourseHandler(BaseHandler):
             "workload": course.get('hours_per_week_in_class_string')        
         }
 
+        fcqs = course.get('fcqs', [])
+
         self.render('layouts/course_view.html',
             raw_data=course,
             course_info=course_info_object,
-            course_stats=course_stats_object)
+            course_stats=course_stats_object,
+            course_fcqs=fcqs,
+            color='orange')

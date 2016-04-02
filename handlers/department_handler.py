@@ -2,11 +2,16 @@ from handlers.base_handler import BaseHandler
 
 
 class DepartmentHandler(BaseHandler):
+    
+    def color(self):
+        return 'violet'
+
     def get(self, id):
         department = self.application.settings['department'].get_item(id)
         if department is None:
             self.redirect('/notFound')
             return
+
         department_info_object = {
             "long_name": department.get('long_name').title(),
             "code": department.get('name'),
@@ -29,6 +34,7 @@ class DepartmentHandler(BaseHandler):
                 department.get('fcqs_stats').get('course_howmuchlearned_average'), 1),
         }
 
+
         self.render('layouts/department_view.html',
                     department_info=department_info_object,
-                    color='violet')
+                    department_stats=department_stats_object,)

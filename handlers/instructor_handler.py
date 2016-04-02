@@ -6,7 +6,7 @@ from handlers.base_handler import BaseHandler
 
 class InstructorHandler(BaseHandler):
 
-    def color(self, course_data):
+    def color(self):
         return 'primary'
 
     def keywords_string(self, instructor_data):
@@ -102,9 +102,7 @@ class InstructorHandler(BaseHandler):
                 instructor.get('fcqs_stats').get('instructor_respect_average'), 1),
         }
 
-        # fcqs = self.get_fcq_data(instructor.get('fcqs'))
         fcqs = instructor.get('fcqs', [])
-
         chart_data = self.overtime_linechart_data(instructor)
 
         self.render('layouts/instructor_view.html',

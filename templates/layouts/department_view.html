@@ -9,13 +9,16 @@
         <div id="content">
             <section>
                 <div class="section-body">
-                    <div class="row">
+                <div class="row">
+                <div class="col-md-3">
                         {% include department/DepartmentInfo.html %}
-                    </div><!--end .row -->
-                    <div class="row">
-                        {% include course/DepartmentStats.html %}
-                    </div><!--end .row -->
+                        {% include department/DepartmentStats.html %}
+                </div>
+                <div class="col-md-9">
+                    {% include department/DepartmentGraphCard.html %}
+                </div>
                 </div><!--end .section-body -->
+                </div>
             </section>
         </div><!--end #content-->
         <!-- END CONTENT -->

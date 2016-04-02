@@ -1,5 +1,4 @@
 a {
-  color: #337ab7;
   text-decoration: none;
 }
 .agrade {
@@ -85,7 +84,7 @@ section.style-violet,
 }
 
 .gui-violet{
-  color: #540D6E !important;    
+  color: #540D6E !important; 
 }
 
 section .style-violet-dark,
@@ -99,3 +98,21 @@ section.style-violet-dark,
   color: #2a0637;
 }
 
+.gui-primary{
+  color: #0aa89e !important;    
+}
+
+.height-14{
+  height:560px;
+}
+.height-info{
+  height:290px;
+}
+
+.height-stats{
+  height: 195px;
+}
+
+.height-16{
+  height:620px;
+}

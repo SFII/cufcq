@@ -102,7 +102,4 @@ class InstructorHandler(BaseHandler):
         chart_data = self.overtime_linechart_data(instructor)
 
         self.render('layouts/instructor_view.html',
-                    raw_data=instructor,
-                    instructor_info=instructor_info_object,
-                    instructor_stats=instructor_stats_object,
-                    instructor_fcqs=fcqs)
+                    raw_data=instructor)

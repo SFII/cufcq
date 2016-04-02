@@ -8,22 +8,22 @@
       <ul class="list divider-full-bleed">
         <li class="tile">
           <div class="tile-content">
-            <div class="tile-text text-primary-dark .instructor-stats-card-department">Overall Score: <a class="text-light">{{i_overall = instructor_stats.get("overall")}} out of 6</a></div>
+            <div class="tile-text text-primary-dark .instructor-stats-card-department">Overall Score: <a class="text-light">{{i_overall = round(raw_data.get('fcqs_stats').get('instructoroverall_average'), 1)}} out of 6</a></div>
           </div>
         </li>
         <li class="tile">
           <div class="tile-content">  
-            <div class="tile-text text-primary-dark .instructor-stats-card-department">Effectiveness: <a class="text-light">{{i_eff = instructor_stats.get("effectiveness")}} out of 6</a></div>
+            <div class="tile-text text-primary-dark .instructor-stats-card-department">Effectiveness: <a class="text-light">{{i_eff = round(raw_data.get('fcqs_stats').get('instructor_effectiveness_average'), 1)}} out of 6</a></div>
           </div>
         </li>
         <li class="tile">
           <div class="tile-content">  
-            <div class="tile-text text-primary-dark .instructor-stats-card-department">Availability: <a class="text-light">{{i_average = instructor_stats.get("availability")}} out of 6</a></div>
+            <div class="tile-text text-primary-dark .instructor-stats-card-department">Availability: <a class="text-light">{{i_average = round(raw_data.get('fcqs_stats').get('instructor_availability_average'), 1)}} out of 6</a></div>
           </div>
         </li>
         <li class="tile">
           <div class="tile-content">  
-            <div class="tile-text text-primary-dark .instructor-stats-card-department">Respect Score: <a class="text-light">{{i_respect = instructor_stats.get("respect")}} out of6</a></div>
+            <div class="tile-text text-primary-dark .instructor-stats-card-department">Respect Score: <a class="text-light">{{i_respect = round(raw_data.get('fcqs_stats').get('instructor_respect_average'), 1)}} out of6</a></div>
           </div>
         </li>
       </ul>

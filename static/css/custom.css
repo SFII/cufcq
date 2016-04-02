@@ -46,9 +46,9 @@ section .style-orange-dark,
 section.style-orange-dark,
 .offcanvas-pane.style-orange-dark,
 .card.style-orange-dark {
-  background-color: #de5302;
-  border-color: #de5302;
-  color: #ffffff;
+  background-color: ##b14202;
+  border-color: ##b14202;
+  color: ##b14202;
 }
 
 section .style-pink-dark,
@@ -73,13 +73,29 @@ section.style-purple-dark,
   color: #ffffff;
 }
 
+section .style-violet,
+.offcanvas-pane .style-violet,
+.card .style-violet,
+section.style-violet,
+.offcanvas-pane.style-violet,
+.card.style-violet {
+  background-color: #540D6E;
+  border-color: #540D6E;
+  color: #ffffff;
+}
+
+.gui-violet{
+  color: #540D6E !important;    
+}
+
 section .style-violet-dark,
 .offcanvas-pane .style-violet-dark,
 .card .style-violet-dark,
 section.style-violet-dark,
 .offcanvas-pane.style-violet-dark,
 .card.style-violet-dark {
-  background-color: #540D6E;
-  border-color: #540D6E;
-  color: #ffffff;
+  background-color: #2a0637;
+  border-color: #2a0637;
+  color: #2a0637;
 }
+

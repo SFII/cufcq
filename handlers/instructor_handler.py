@@ -79,26 +79,6 @@ class InstructorHandler(BaseHandler):
             self.redirect('/notFound')
             return
 
-        instructor_info_object = {
-            "first_name": instructor.get('instructor_first').title(),
-            "last_name": instructor.get('instructor_last').title(),
-            "department": instructor.get('department_id').upper(),
-            "type": instructor.get('instructor_group'),
-            "sections": len(instructor.get('fcqs')),
-            "courses": len(instructor.get('courses')),
-            "last_fcq": self.convert_date(instructor.get('fcqs_yearterms')[-1]),
-            "first_fcq": self.convert_date(instructor.get('fcqs_yearterms')[0]),
-        }
-        instructor_stats_object = {
-            "effectiveness": round(instructor.get('fcqs_stats').get('instructor_effectiveness_average'), 1),
-            "overall": round(instructor.get('fcqs_stats').get('instructoroverall_average'), 1),
-            "availability": round(instructor.get('fcqs_stats').get('instructor_availability_average'), 1),
-            "respect": round(instructor.get('fcqs_stats').get('instructor_respect_average'), 1),
-        }
-
-        # fcqs = self.get_fcq_data(instructor.get('fcqs'))
-        fcqs = instructor.get('fcqs', [])
-
         chart_data = self.overtime_linechart_data(instructor)
 
         self.render('layouts/instructor_view.html',

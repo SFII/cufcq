@@ -12,8 +12,9 @@ class BaseHandler(tornado.web.RequestHandler):
         kwargs['keywords_string'] = self.keywords_string(raw_data)
         kwargs['description_string'] = self.description_string(raw_data)
         kwargs['linechart_data'] = self.overtime_linechart_data(raw_data)
-        kwargs['color'] = self.color(raw_data)
+        kwargs['color'] = self.color()
         kwargs['convert_date'] = self.convert_date
+        kwargs['convert_campus'] = self.convert_campus
         super().render(template_name, **kwargs)
 
     def color(self):

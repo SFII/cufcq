@@ -78,5 +78,4 @@ class CourseHandler(BaseHandler):
             self.redirect('/notFound')
             return
 
-        self.render('layouts/course_view.html',
-            raw_data=course)
+        self.render('layouts/course_view.html', raw_data=course)

@@ -9,12 +9,14 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def render(self, template_name, **kwargs):
         raw_data = kwargs.get('raw_data', '')
+        logging.info(raw_data)
         kwargs['keywords_string'] = self.keywords_string(raw_data)
         kwargs['description_string'] = self.description_string(raw_data)
         kwargs['linechart_data'] = self.overtime_linechart_data(raw_data)
         kwargs['color'] = self.color()
         kwargs['convert_date'] = self.convert_date
         kwargs['convert_campus'] = self.convert_campus
+        kwargs['noneCheck'] = self.noneCheck
         super().render(template_name, **kwargs)
 
     def color(self):
@@ -23,11 +25,19 @@ class BaseHandler(tornado.web.RequestHandler):
     def keywords_string(self, raw_data):
         return """cufcq,university,colorado,faculty,course,instructor,fcq,grade,department,database"""
 
+    def noneCheck(self, raw_data):
+        if(raw_data != None):
+            round(raw_data, 1)
+        else:
+            return 0
+        
     def description_string(self, raw_data):
         return """CUFCQ is a data analysis project for studying and visualizing
         the University of Colorado's Faculty Course Questionnaire data."""
 
     def convert_date(self, yearterm):
+        if(yearterm == ''):
+            return ''
         VALID_TERMS = {'1': 'Spring', '4': 'Summer', '7': 'Fall'}
         yearterm_str = str(yearterm)
         year = yearterm_str[0:4]

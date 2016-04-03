@@ -32,7 +32,7 @@
 				</li>
 				<li class="tile">
 					<div class="tile-content">	
-						<div class="tile-text text-primary-dark">Last FCQ: <a class="text-light">{{ convert_date(raw_data.get('fcqs_yearterms')[-1]) }}</a></div>
+						<div class="tile-text text-primary-dark">Last FCQ: <a class="text-light">{{ convert_date(raw_data.get('fcqs_yearterms', ['',''])[-1]) }}</a></div>
 					</div>
 				</li>
 			</ul>

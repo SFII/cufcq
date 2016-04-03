@@ -25,7 +25,7 @@ class BaseHandler(tornado.web.RequestHandler):
         return """cufcq,university,colorado,faculty,course,instructor,fcq,grade,department,database"""
 
     def noneCheck(self, raw_data):
-        if(raw_data != None):
+        if(raw_data is not None):
             round(raw_data, 1)
         else:
             return 0

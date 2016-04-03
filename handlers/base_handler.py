@@ -9,7 +9,6 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def render(self, template_name, **kwargs):
         raw_data = kwargs.get('raw_data', '')
-        logging.info(raw_data)
         kwargs['keywords_string'] = self.keywords_string(raw_data)
         kwargs['description_string'] = self.description_string(raw_data)
         kwargs['linechart_data'] = self.overtime_linechart_data(raw_data)
